@@ -44,6 +44,7 @@ namespace WebApiServer.Controllers
 
             var stwi = new StudentWithImage()
             {
+                StudentID=id,
                 StudentName = students.Find(s => s.StudentID == id).StudentName,
                 StudentLastName = students.Find(s => s.StudentID == id).StudentLastName,
                 ImagePath = students.Find(s => s.StudentID == id).Image.ImagePath
@@ -83,7 +84,7 @@ namespace WebApiServer.Controllers
         }
 
         //UPDATE: Api/Student/Update
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult Update(StudentWithImage stwi)
         {
             var existingStudent = Db.Students.Where(st => st.StudentID == stwi.StudentID).FirstOrDefault();
@@ -92,6 +93,7 @@ namespace WebApiServer.Controllers
                 existingStudent.StudentName = stwi.StudentName;
                 existingStudent.StudentLastName = stwi.StudentLastName;
                 existingStudent.Image.ImagePath = stwi.ImagePath;
+
                 Db.SaveChanges();
             }
             else
